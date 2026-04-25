@@ -5,6 +5,7 @@ type: software
 title: "Strata Runtime: Orchestration Layer for the Five-Agent Database Archaeology Pipeline"
 version: 0.1.0
 date-released: 2026-04-25
+doi: "10.5281/zenodo.19768151"
 
 authors:
   - family-names: Shatny
