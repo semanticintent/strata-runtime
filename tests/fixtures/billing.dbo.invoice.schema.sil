@@ -1,0 +1,10 @@
+CONSTRUCT  schema
+ID         billing.dbo.invoice
+VERSION    1
+─────────────────────────────────────────
+object:    dbo.invoice
+type:      table
+columns:   14
+indexes:   3
+domain:    billing
+notes:     central fact table for invoice lifecycle

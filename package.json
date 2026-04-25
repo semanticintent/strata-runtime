@@ -1,0 +1,59 @@
+{
+  "name": "@semanticintent/strata-runtime",
+  "version": "0.1.0",
+  "description": "Strata Database Archaeology Runtime — orchestrate the 5-agent database excavation pipeline. Manages .sil artifact state, enforces human gates, and produces agent prompts ready to run in any AI interface.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "strata": "./bin/strata.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "agents/",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build": "tsc",
+    "dev": "vitest watch",
+    "validate": "npm run build && npm run test:coverage",
+    "prepublishOnly": "npm run validate"
+  },
+  "keywords": [
+    "strata",
+    "database-archaeology",
+    "legacy-modernization",
+    "ember",
+    "sil",
+    "semantic-intent",
+    "agent-pipeline",
+    "sql-server",
+    "schema-analysis"
+  ],
+  "author": "Michael Shatny",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/semanticintent/strata-runtime.git"
+  },
+  "homepage": "https://phoenix.semanticintent.dev/strata/",
+  "bugs": {
+    "url": "https://github.com/semanticintent/strata-runtime/issues"
+  },
+  "dependencies": {
+    "@semanticintent/ember": "^0.1.2",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@vitest/coverage-v8": "^1.6.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}

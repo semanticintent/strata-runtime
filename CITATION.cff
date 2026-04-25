@@ -1,0 +1,69 @@
+cff-version: 1.2.0
+message: "If you use Strata in your work, please cite it using this metadata."
+type: software
+
+title: "Strata Runtime: Orchestration Layer for the Five-Agent Database Archaeology Pipeline"
+version: 0.1.0
+date-released: 2026-04-25
+
+authors:
+  - family-names: Shatny
+    given-names: Michael
+    orcid: "https://orcid.org/0009-0006-2011-3258"
+
+abstract: >
+  Strata is a database archaeology methodology for SQL Server and enterprise
+  database systems. The Strata Runtime orchestrates the five-agent excavation
+  pipeline (Schema Signal → Logic Extractor → Job Mapper → Dependency Tracer →
+  Classifier), manages .sil artifact state, enforces a human review gate before
+  classification, and produces agent prompts ready to run in any AI interface.
+  npm: @semanticintent/strata-runtime. bin: strata.
+
+keywords:
+  - strata
+  - database-archaeology
+  - legacy-modernization
+  - ember
+  - sil
+  - semantic-intent
+  - agent-pipeline
+  - sql-server
+  - schema-analysis
+
+license: MIT
+
+repository-code: "https://github.com/semanticintent/strata-runtime"
+url: "https://phoenix.semanticintent.dev/strata/"
+
+references:
+  - type: software
+    title: "EMBER: Semantic Intent Language for Project Phoenix"
+    authors:
+      - family-names: Shatny
+        given-names: Michael
+        orcid: "https://orcid.org/0009-0006-2011-3258"
+    doi: "10.5281/zenodo.19751387"
+
+  - type: software
+    title: "Phoenix Runtime: Orchestration Layer for the Seven-Agent Legacy Modernization Pipeline"
+    authors:
+      - family-names: Shatny
+        given-names: Michael
+        orcid: "https://orcid.org/0009-0006-2011-3258"
+    doi: "10.5281/zenodo.19360782"
+
+  - type: software
+    title: "Project Phoenix: The Agentic Greenfield Pipeline for Legacy Modernization"
+    authors:
+      - family-names: Shatny
+        given-names: Michael
+        orcid: "https://orcid.org/0009-0006-2011-3258"
+    doi: "10.5281/zenodo.19360727"
+
+  - type: article
+    title: "Methodology-as-Infrastructure: From Framework to Runtime"
+    authors:
+      - family-names: Shatny
+        given-names: Michael
+        orcid: "https://orcid.org/0009-0006-2011-3258"
+    doi: "10.5281/zenodo.18946631"
