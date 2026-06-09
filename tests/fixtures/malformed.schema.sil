@@ -1,0 +1,5 @@
+CONSTRUCT  schema
+ID         billing.dbo.bad
+VERSION    1
+object:    dbo.bad
+type:      table

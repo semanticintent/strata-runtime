@@ -1,13 +1,13 @@
 {
   "name": "@semanticintent/strata-runtime",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Strata Database Archaeology Runtime — orchestrate the 5-agent database excavation pipeline. Manages .sil artifact state, enforces human gates, and produces agent prompts ready to run in any AI interface.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "strata": "./bin/strata.js"
+    "strata": "bin/strata.js"
   },
   "files": [
     "dist/",

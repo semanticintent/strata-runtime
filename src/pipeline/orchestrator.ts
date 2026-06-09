@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { AGENTS, getAgent } from './agents.js'
 import { readState, canRun, type PipelineState } from './state.js'
 import { loadPrompt, runtimeRoot } from '../prompts/loader.js'
+import { readSil, getConfidence } from '../parser/sil.js'
 import type { ConstructType } from '../parser/sil.js'
 
 export interface RunResult {
@@ -13,12 +14,22 @@ export interface RunResult {
   prerequisitesMet: string[]
 }
 
+export interface FileValidation {
+  file: string
+  ok: boolean
+  error?: string
+  constructMismatch?: { expected: ConstructType; found: ConstructType }
+  confidence: 'high' | 'medium' | 'low' | null
+}
+
 export interface ArtifactValidation {
   agentId: string
   expected: ConstructType[]
   found: Record<ConstructType, number>
   missing: ConstructType[]
   lowConfidence: string[]
+  fileResults: FileValidation[]
+  parseErrors: string[]
 }
 
 const CONSTRUCT_DIRS: Partial<Record<ConstructType, string>> = {
@@ -201,11 +212,43 @@ export function validateArtifacts(
 
   const found: Partial<Record<ConstructType, number>> = {}
   const missing: ConstructType[] = []
+  const fileResults: FileValidation[] = []
+  const parseErrors: string[] = []
+  const lowConfidence: string[] = []
 
   for (const construct of agent.produces) {
-    const count = countArtifacts(projectPath, construct)
-    found[construct] = count
-    if (count === 0) missing.push(construct)
+    const dir = artifactDir(projectPath, construct)
+    const files = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.sil')) : []
+    found[construct] = files.length
+    if (files.length === 0) missing.push(construct)
+
+    for (const filename of files) {
+      const filePath = join(dir, filename)
+      try {
+        const artifact = readSil(filePath)
+        const confidence = getConfidence(artifact)
+        const foundType = artifact.construct as ConstructType
+        if (foundType !== construct) {
+          fileResults.push({
+            file: filename,
+            ok: false,
+            constructMismatch: { expected: construct, found: foundType },
+            confidence,
+          })
+        } else {
+          if (confidence === 'low') lowConfidence.push(filename)
+          fileResults.push({ file: filename, ok: confidence !== 'low', confidence })
+        }
+      } catch (err) {
+        parseErrors.push(filename)
+        fileResults.push({
+          file: filename,
+          ok: false,
+          error: (err as Error).message,
+          confidence: null,
+        })
+      }
+    }
   }
 
   return {
@@ -213,6 +256,8 @@ export function validateArtifacts(
     expected: agent.produces,
     found: found as Record<ConstructType, number>,
     missing,
-    lowConfidence: [],
+    lowConfidence,
+    fileResults,
+    parseErrors,
   }
 }

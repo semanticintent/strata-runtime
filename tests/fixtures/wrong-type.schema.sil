@@ -1,0 +1,8 @@
+CONSTRUCT  routine
+ID         billing.sp_wrong
+VERSION    1
+─────────────────────────────────────────
+type:      stored-procedure
+entry:     EXEC billing.sp_wrong
+
+confidence: high

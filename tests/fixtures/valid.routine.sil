@@ -1,0 +1,10 @@
+CONSTRUCT  routine
+ID         billing.sp_generate_invoice
+VERSION    1
+─────────────────────────────────────────
+type:      stored-procedure
+entry:     EXEC billing.sp_generate_invoice @order_id
+reads:     orders, customers
+writes:    invoices
+
+confidence: high

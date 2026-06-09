@@ -1,0 +1,10 @@
+CONSTRUCT  schema
+ID         billing.dbo.unclear
+VERSION    1
+─────────────────────────────────────────
+object:    dbo.unclear
+type:      table
+columns:   6
+notes:     schema partially reverse-engineered, some relationships unclear
+
+confidence: low

@@ -174,17 +174,44 @@ describe('validateArtifacts', () => {
     expect(result.missing).toContain('routine')
   })
 
-  it('reports zero missing when files exist', () => {
+  it('reports zero missing when valid files exist', () => {
     cpSync(
-      join(FIXTURES, 'billing.dbo.invoice.schema.sil'),
+      join(FIXTURES, 'valid.routine.sil'),
       join(testDir, 'routines', 'billing.dbo.sp_generate_invoice.sil')
     )
     const result = validateArtifacts('s-01', testDir)
     expect(result.found['routine']).toBe(1)
     expect(result.missing).not.toContain('routine')
+    expect(result.parseErrors).toHaveLength(0)
+    expect(result.fileResults[0].ok).toBe(true)
   })
 
   it('throws for unknown agent', () => {
     expect(() => validateArtifacts('s-99', testDir)).toThrow('Unknown agent')
+  })
+})
+
+describe('validateArtifacts — content validation', () => {
+  it('detects parse errors in malformed .sil files', () => {
+    cpSync(join(FIXTURES, 'malformed.schema.sil'), join(testDir, 'schemas', 'malformed.sil'))
+    const result = validateArtifacts('s-00', testDir)
+    expect(result.parseErrors).toContain('malformed.sil')
+    expect(result.fileResults.find((f) => f.file === 'malformed.sil')?.ok).toBe(false)
+  })
+
+  it('detects construct type mismatch', () => {
+    cpSync(join(FIXTURES, 'wrong-type.schema.sil'), join(testDir, 'schemas', 'wrong.sil'))
+    const result = validateArtifacts('s-00', testDir)
+    const f = result.fileResults.find((r) => r.file === 'wrong.sil')
+    expect(f?.ok).toBe(false)
+    expect(f?.constructMismatch).toEqual({ expected: 'schema', found: 'routine' })
+  })
+
+  it('flags low confidence files', () => {
+    cpSync(join(FIXTURES, 'low-confidence.schema.sil'), join(testDir, 'schemas', 'low.sil'))
+    const result = validateArtifacts('s-00', testDir)
+    expect(result.lowConfidence).toContain('low.sil')
+    expect(result.fileResults.find((f) => f.file === 'low.sil')?.confidence).toBe('low')
+    expect(result.parseErrors).toHaveLength(0)
   })
 })
