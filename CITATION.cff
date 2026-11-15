@@ -3,9 +3,9 @@ message: "If you use Strata in your work, please cite it using this metadata."
 type: software
 
 title: "Strata Runtime: Orchestration Layer for the Five-Agent Database Archaeology Pipeline"
-version: 0.1.0
-date-released: 2026-04-25
-doi: "10.5281/zenodo.19768151"
+version: 0.1.1
+date-released: 2026-06-09
+doi: "10.5281/zenodo.19768150"
 
 authors:
   - family-names: Shatny
